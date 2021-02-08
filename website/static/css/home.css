@@ -1,0 +1,88 @@
+body {font-family: "Lato", sans-serif;}
+
+.Side_Panel {
+  margin: 0;
+  padding: 0;
+  width: 13%;
+  top: 0;
+  left: 0;
+  
+  background-color: #e2e2e2;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.Navigation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  height: 4%; 
+  background-color: #e2e2e2;
+}
+
+.Content {
+  position: absolute;
+  width: 100%;
+  top: 4%;
+  height: 96%;
+  background-color: #f1f1f1;
+}
+
+.Content button{
+  cursor: pointer;
+  display: block;
+}
+
+.Run{
+  cursor: pointer;
+  border: none;
+  background-color: inherit;
+  font-size: 30px;
+}
+
+.drag { 
+  position: absolute;
+  z-index: auto;
+  background-color: #f1f1f1;
+  text-align: center;
+  border: 1px solid #d3d3d3;
+  display: inline-block;  
+}  
+
+#mydivheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #2196F3;
+  color: #fff;
+}
+
+
+.btn-connect{
+  border-radius: 100%;
+  font-size: 10px;
+  padding:5px;
+  margin: 4px 4px;
+  cursor: pointer;
+  background-color: azure;
+}
+
+button#in.btn-connect{
+  position: absolute;
+  left: -11px; 
+}
+
+button#out.btn-connect{
+  position: absolute;
+  right: -11px;
+}
+
+.spaceholder{
+  padding: 20px;
+
+}
+
+  
