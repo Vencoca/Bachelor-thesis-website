@@ -1,14 +1,11 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-  dragElement(document.getElementById("dragthis"));
+  dragElement(document.getElementById("Run_button"));
 
   var j = create_element("1dsad");
   var d = create_element("2");
   combine_elements(j,d);
 });
-
-
-
 
 function combine_elements(j, d){
   if (j.classList.contains("combine") || d.classList.contains("combine")) {
@@ -209,9 +206,13 @@ function dragElement(elmnt) {
           elementright = parseInt(element.style.left,10) + element.offsetWidth;
           rang = 10;
           if ((((elmnttop -rang) < elementtop) && ((elmnttop + rang) > elementtop)) && (((elmntright -rang) < elementleft) && ((elmntright + rang) > elementleft))){
-            combine_elements(elmnt,element);
+            if (element.id === "Run_button"){} else {
+              combine_elements(elmnt,element);
+            }
           } else if ((((elmnttop -rang) < elementtop) && ((elmnttop + rang) > elementtop)) && (((elmntleft -rang) < elementright) && ((elmntleft + rang) > elementright))){
-            combine_elements(element,elmnt);
+            if (elmnt.id === "Run_button"){} else {
+              combine_elements(element,elmnt);
+            }
           }
 
         } 
