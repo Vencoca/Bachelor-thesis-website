@@ -50,6 +50,7 @@ body {font-family: "Lato", sans-serif;}
   text-align: center;
   border: 1px solid #d3d3d3;
   display: inline-block;  
+  float: inline-start;
 }  
 
 #mydivheader {
