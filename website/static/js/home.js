@@ -5,6 +5,17 @@ document.addEventListener("DOMContentLoaded", () => {
   var j = create_element("1dsad");
   var d = create_element("2");
   combine_elements(j,d);
+
+  //Js for tree view
+  var toggler = document.getElementsByClassName("caret");
+  var i;
+
+  for (i = 0; i < toggler.length; i++) {
+    toggler[i].addEventListener("click", function() {
+      this.parentElement.querySelector(".nested").classList.toggle("active");
+      this.classList.toggle("caret-down");
+    });
+  } 
 });
 
 function combine_elements(j, d){

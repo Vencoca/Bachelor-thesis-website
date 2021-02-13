@@ -1,38 +1,36 @@
 body {font-family: "Lato", sans-serif;}
 
-.Side_Panel {
-  margin: 0;
-  padding: 0;
-  width: 13%;
-  top: 0;
-  left: 0;
-  
-  background-color: #e2e2e2;
-  position: fixed;
-  height: 100%;
-  overflow: auto;
+ul{
+  list-style-type: none;
+  padding-left: 20px;
 }
 
-.Navigation {
-  position: absolute;
-  top: 0;
-  left: 0;
-  text-align: center;
-  width: 100%;
-  height: 4%; 
-  background-color: #e2e2e2;
-}
-
-.Content {
-  position: absolute;
-  width: 100%;
-  top: 4%;
-  height: 96%;
-  background-color: #f1f1f1;
-}
-
-.Content button{
+.span-click{
   cursor: pointer;
+  user-select: none;
+}
+.caret {
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+.caret::before {
+  font-family: FontAwesome;
+  content: "\f114";
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.caret-down::before {
+  content: "\f115";
+}
+
+.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
   display: block;
 }
 

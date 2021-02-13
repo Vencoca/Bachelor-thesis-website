@@ -2,35 +2,45 @@
 <!DOCTYPE html>
 <html>
     <head> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">    
-        <link rel="stylesheet" href="{% static 'css/home.css' %}">  
+        <link rel="stylesheet" href="{% static 'css/home.css' %}"> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> 
         <title>Robot IDE</title>
     </head>
     <body>
-        <div class="Side_Panel">
-            <div class="Navigation">
-                <p>Navigation</p>
-            </div>
-            <div class="Content" id="Content">
-                {% for block in all_block%}
-                    <button id = "{{block.name}}" onclick="create_element(this.id)">{{block.name}}</button>
-                {% endfor %}
-            </div>
-            
-        </div>
-        <div id = "container" style ="margin-left:13%">
-            
-            <div class="drag" id = "Run_button" style ="top:40%; left: 15%;">
-                <div id = "mydivheader">Run
-                    <button id = 'in' class = 'btn-connect' style="visibility: hidden; "> </button>
-                    <button id = 'out' class = 'btn-connect'> </button>
+        <div class="container-fluid h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-2 h-100">
+                    <div class="row">
+                        <div class="col-12">Navigation</div>
+                    </div>
+                    <div class="row">
+                        <ul id= "blocks">
+                            <li><span class="caret">Default blocks</span>
+                                <ul class="nested">
+                                {% for block in all_block%}
+                                    <li id = "{{block.name}}" onclick="create_element(this.id)" ><span class="span-click"><i class="fa fa-cubes" style="margin-right: 6px;"></i>{{block.name}}</span></li>
+                                {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>    
                 </div>
-                <div class = "spaceholder">
-                    <button class="Run" value="" id = "Run">▶️</button> 
-                </div>  
-            </div> 
+                <div id = "container" class ="col-10 h-100">
+                    <div class="drag" id = "Run_button" style ="top:40%; left: 15%;">
+                        <div id = "mydivheader">Run
+                            <button id = 'in' class = 'btn-connect' style="visibility: hidden; "> </button>
+                            <button id = 'out' class = 'btn-connect'> </button>
+                        </div>
+                        <div class = "spaceholder">
+                            <button class="Run" value="" id = "Run">▶️</button> 
+                        </div>  
+                    </div> 
+                </div>
+            </div>
         </div>
-        
     </body>
     <script>
         $(document).ready(function(){
