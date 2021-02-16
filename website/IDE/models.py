@@ -14,3 +14,12 @@ class Block(models.Model):
     def __str__(self):
         return self.name
 
+class Slider(models.Model):
+    name =  models.CharField(max_length = 50, default='def_name')
+    minimum = models.IntegerField()
+    maximum = models.IntegerField()
+    default = models.IntegerField()
+    block = models.ForeignKey(Block, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.block.name

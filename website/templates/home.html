@@ -22,6 +22,9 @@
                                 <ul class="nested">
                                 {% for block in all_block%}
                                     <li id = "{{block.name}}" onclick="create_element(this.id)" ><span class="span-click"><i class="fa fa-cubes" style="margin-right: 6px;"></i>{{block.name}}</span></li>
+                                    {%for children in block.slider_set.all%}
+                                    <li id = "{{children.name}}" onclick="create_element(this.id)" ><span class="span-click"><i class="fa fa-cubes" style="margin-right: 6px;"></i>{{children.name}}</span></li>
+                                    {% endfor %}
                                 {% endfor %}
                                 </ul>
                             </li>
