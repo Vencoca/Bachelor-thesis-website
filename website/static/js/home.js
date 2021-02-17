@@ -128,6 +128,9 @@ function decombine_elements(j, d){
 }
 
 function create_element(idecko){
+    
+
+
     var div = document.createElement('div');
     div.classList.add("drag");
     div.id = idecko;
@@ -150,6 +153,17 @@ function create_element(idecko){
     out.id = 'out';
     out.classList.add('btn-connect');
   
+    $.ajax({
+      url: '',
+      type: 'get',
+      data: {
+        id : idecko
+      },
+      success: function(response){
+        spaceholder.innerHTML = (response.seconds)
+      }
+    })
+
     div.appendChild(header);
     div.appendChild(spaceholder)
     header.appendChild(inpt);
@@ -158,6 +172,8 @@ function create_element(idecko){
     var container = document.getElementById('container');
     container.appendChild(div);
     dragElement(div);
+
+    
 
     var run_but = document.getElementById("Run");
     run_but.value = run_but.value + idecko + "; ";
