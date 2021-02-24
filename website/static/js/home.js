@@ -1,5 +1,16 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+  var Run_button = create_element("Run")
+  Run_button.children[0].children[0].style.visibility = "hidden"
+  Run_button.style.top = "40%"
+  Run_button.style.left = "15%"
+  var Runbut = document.createElement('button')
+  Runbut.id = "Run"
+  Runbut.innerHTML = "▶️"
+  Runbut.classList.add = "Run"
+  Run_button.children[1].appendChild(Runbut)
+
+
   dragElement(document.getElementById("Run_button"));
 
   var j = create_element("1dsad");
@@ -195,15 +206,12 @@ function create_element(idecko){
   }
   
 function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    if (document.getElementById(elmnt.id + "header")) {
-      /* if present, the header is where you move the DIV from:*/
-      document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-    } else {
-      /* otherwise, move the DIV from anywhere inside the DIV:*/
-      elmnt.onmousedown = dragMouseDown;
-    }
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0; var tmp = elmnt;
     
+
+    elmnt.firstChild.onmousedown = dragMouseDown;
+    console.log(elmnt.firstChild)
+
     function dragMouseDown(e) {
       e = e || window.event;
       e.preventDefault();
@@ -216,7 +224,6 @@ function dragElement(elmnt) {
     }
   
     function elementDrag(e) {
-      elmnt.style.zIndex = "1";
       e = e || window.event;
       e.preventDefault();
       // calculate the new cursor position:
@@ -226,18 +233,14 @@ function dragElement(elmnt) {
         pos4 = e.clientY;
       // set the element's new position:
       console.log(elmnt.parentElement.classList.contains("combine"));
-      if (elmnt.parentElement.classList.contains("combine")){
-        if ((elmnt.parentElement.offsetTop - pos2) > 0){
-          elmnt.parentElement.style.top = (elmnt.parentElement.offsetTop - pos2) + "px";
-        } else {
-          elmnt.parentElement.style.top = 0 + "px";
-        }
-        if ((elmnt.parentElement.offsetLeft - pos1) > 0){
-          elmnt.parentElement.style.left = (elmnt.parentElement.offsetLeft - pos1) + "px";
-        } else {
-          elmnt.parentElement.style.left = 0 + "px";
-        }
-      } else {
+      //Move for combined elements
+      if (elmnt.parentElement.classList.contains("combine"))
+      {
+        elmnt = elmnt.parentElement
+      }
+
+      //Move for alone element
+        elmnt.style.zIndex = "1";
         if ((elmnt.offsetTop - pos2) > 0){
           elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
         } else {
@@ -248,7 +251,7 @@ function dragElement(elmnt) {
         } else {
           elmnt.style.left = 0 + "px";
         }
-      }
+      
 
     }
   
@@ -280,5 +283,6 @@ function dragElement(elmnt) {
 
         } 
       });
+      elmnt = tmp
     }
   }
