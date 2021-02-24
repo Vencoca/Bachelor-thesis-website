@@ -70,7 +70,7 @@ function combine_elements(j, d){
     container.removeChild(d);
     div.appendChild(j);
     div.appendChild(d);
-    dragElement(div);
+    //dragElement(div);
   }  
 }
 
@@ -135,8 +135,9 @@ function create_element(idecko){
     div.classList.add("drag");
     div.id = idecko;
     var header = document.createElement('div');
-    header.id = "mydivheader"
+    header.id = idecko + "header"
     header.innerHTML = idecko;
+    header.classList.add("mydivheader")
 
     var spaceholder = document.createElement('div');
     spaceholder.classList.add("form-group");
@@ -164,12 +165,16 @@ function create_element(idecko){
         arr_from_json.forEach(element => Slider(element));
         
         function Slider(Slider) {
+          spaceholder.appendChild(document.createTextNode(Slider.fields.name));
+          console.log(Slider.fields.name)
           var range = document.createElement("input")
           range.setAttribute("type", "range");
           range.classList.add("form-control-range")
           spaceholder.appendChild(range)
         } 
-        /* https://stackoverflow.com/questions/32318315/irregular-bootstrap-slider-step-values */
+        /* https://stackoverflow.com/questions/32318315/irregular-bootstrap-slider-step-values 
+           https://www.tutorialrepublic.com/codelab.php?topic=bootstrap&file=custom-range
+        */
       }
     })
 
@@ -212,7 +217,6 @@ function dragElement(elmnt) {
   
     function elementDrag(e) {
       elmnt.style.zIndex = "1";
-      var sidebar = document.getElementById('sidebar')
       e = e || window.event;
       e.preventDefault();
       // calculate the new cursor position:
@@ -221,17 +225,30 @@ function dragElement(elmnt) {
         pos3 = e.clientX;
         pos4 = e.clientY;
       // set the element's new position:
-      if ((elmnt.offsetTop - pos2) > 0){
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+      console.log(elmnt.parentElement.classList.contains("combine"));
+      if (elmnt.parentElement.classList.contains("combine")){
+        if ((elmnt.parentElement.offsetTop - pos2) > 0){
+          elmnt.parentElement.style.top = (elmnt.parentElement.offsetTop - pos2) + "px";
+        } else {
+          elmnt.parentElement.style.top = 0 + "px";
+        }
+        if ((elmnt.parentElement.offsetLeft - pos1) > 0){
+          elmnt.parentElement.style.left = (elmnt.parentElement.offsetLeft - pos1) + "px";
+        } else {
+          elmnt.parentElement.style.left = 0 + "px";
+        }
       } else {
-        elmnt.style.top = 0 + "px";
+        if ((elmnt.offsetTop - pos2) > 0){
+          elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        } else {
+          elmnt.style.top = 0 + "px";
+        }
+        if ((elmnt.offsetLeft - pos1) > 0){
+          elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        } else {
+          elmnt.style.left = 0 + "px";
+        }
       }
-      if ((elmnt.offsetLeft - pos1) > 0){
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-      } else {
-        elmnt.style.left = 0 + "px";
-      }
-
 
     }
   
