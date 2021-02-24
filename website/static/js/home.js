@@ -139,7 +139,7 @@ function create_element(idecko){
     header.innerHTML = idecko;
 
     var spaceholder = document.createElement('div');
-    spaceholder.classList.add("spaceholder");
+    spaceholder.classList.add("form-group");
 
     var inpt = document.createElement('button');
     inpt.type = 'button';
@@ -160,7 +160,16 @@ function create_element(idecko){
         id : idecko
       },
       success: function(response){
-        spaceholder.innerHTML = (response.seconds)
+        var arr_from_json = JSON.parse( response.qs)
+        arr_from_json.forEach(element => Slider(element));
+        
+        function Slider(Slider) {
+          var range = document.createElement("input")
+          range.setAttribute("type", "range");
+          range.classList.add("form-control-range")
+          spaceholder.appendChild(range)
+        } 
+        /* https://stackoverflow.com/questions/32318315/irregular-bootstrap-slider-step-values */
       }
     })
 
