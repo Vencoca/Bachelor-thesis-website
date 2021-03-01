@@ -28,21 +28,16 @@
                         </ul>
                     </div>    
                 </div>
-                <div id = "container" class ="col-10 h-100">
-                    <div class="drag" id = "Run_button" style ="top:40%; left: 15%;">
-                        <div class = "mydivheader" >Run
-                            <button id = 'in' class = 'btn-connect' style="visibility: hidden; "> </button>
-                            <button id = 'out' class = 'btn-connect'> </button>
-                        </div>
-                        <div class = "spaceholder">
-                            <button class="Run" value="" id = "Run">▶️</button> 
-                        </div>  
-                    </div> 
+                <div id = "container" class ="col-10 h-100"> 
                 </div>
             </div>
         </div>
     </body>
     <script>
+        function updateTextInput(val,elmnt) {
+            elmnt.previousSibling.innerHTML=val;
+        }
+        /*
         $(document).ready(function(){
             $( ".Run" ).click(function() {
                 $.ajax({
@@ -56,7 +51,7 @@
                     }
                 })
             });
-        });
+        });*/
     </script>
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>

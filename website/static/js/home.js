@@ -4,14 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
   Run_button.children[0].children[0].style.visibility = "hidden"
   Run_button.style.top = "40%"
   Run_button.style.left = "15%"
+  Run_button.children[1].classList.remove("form-group")
+  Run_button.children[1].classList.add("spaceholder")
   var Runbut = document.createElement('button')
   Runbut.id = "Run"
   Runbut.innerHTML = "▶️"
-  Runbut.classList.add = "Run"
+  Runbut.classList.add("Run")
   Run_button.children[1].appendChild(Runbut)
-
-
-  dragElement(document.getElementById("Run_button"));
 
   var j = create_element("1dsad");
   var d = create_element("2");
@@ -139,9 +138,6 @@ function decombine_elements(j, d){
 }
 
 function create_element(idecko){
-    
-
-
     var div = document.createElement('div');
     div.classList.add("drag");
     div.id = idecko;
@@ -176,12 +172,21 @@ function create_element(idecko){
         arr_from_json.forEach(element => Slider(element));
         
         function Slider(Slider) {
-          spaceholder.appendChild(document.createTextNode(Slider.fields.name));
-          console.log(Slider.fields.name)
+          var slider_div= document.createElement('div')
+          var text = document.createElement('span')
+          text.innerHTML = Slider.fields.default
+          slider_div.appendChild(document.createTextNode(Slider.fields.name));
+          slider_div.appendChild(document.createElement('br'));
+          slider_div.appendChild(text)
           var range = document.createElement("input")
           range.setAttribute("type", "range");
+          range.setAttribute("min", Slider.fields.minimum);
+          range.setAttribute("max",  Slider.fields.maximum);
+          range.value = Slider.fields.default;
+          range.setAttribute("onchange", "updateTextInput(this.value,this);");
           range.classList.add("form-control-range")
-          spaceholder.appendChild(range)
+          slider_div.appendChild(range)
+          spaceholder.appendChild(slider_div)
         } 
         /* https://stackoverflow.com/questions/32318315/irregular-bootstrap-slider-step-values 
            https://www.tutorialrepublic.com/codelab.php?topic=bootstrap&file=custom-range
@@ -199,9 +204,9 @@ function create_element(idecko){
     dragElement(div);
 
     
-
+    /*
     var run_but = document.getElementById("Run");
-    run_but.value = run_but.value + idecko + "; ";
+    run_but.value = run_but.value + idecko + "; ";¸*/
     return div
   }
   
