@@ -33,27 +33,9 @@
             </div>
         </div>
     </body>
-    <script>
-        function updateTextInput(val,elmnt) {
-            elmnt.previousSibling.innerHTML=val;
-        }
-        /*
-        $(document).ready(function(){
-            $( ".Run" ).click(function() {
-                $.ajax({
-                    url: '',
-                    type: 'POST',
-                    data:{
-                        button_text: $(this).val()
-                    },
-                    success: function(response) {
-                        $(".Run").text(response.seconds)
-                    }
-                })
-            });
-        });*/
-    </script>
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/home.js' %}"></script> 
+    <script src="{% static 'js/drag.js' %}"></script> 
+    <script src="{% static 'js/box.js' %}"></script> 
+    <script src="{% static 'js/domload.js' %}"></script> 
 </html>
