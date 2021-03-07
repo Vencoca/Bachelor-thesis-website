@@ -40,6 +40,14 @@ function dragElement(el) {
     } else {
       el.style.left = 0 + "px";
     }
+    //Změna barvy mazacího pole po přesunutí do rozsahu
+    if(del(el)){
+      dlt.style.backgroundColor = "#cf3f57fb"
+      dlt.innerHTML = "Chcete objekt smazat ?"
+    } else {
+      dlt.style.backgroundColor = "#2196F3"
+      dlt.innerHTML = "Pro smazání přesuň zde"
+    }
   }
   //Ukončení pohybu po zvednutí pravého tlačítka
   function closeDrag() {
@@ -48,7 +56,9 @@ function dragElement(el) {
     document.onmousemove = null;
     el.style.zIndex = "0"; 
     combine(); //Kontroluje jestli se nemá něco spojit
-    del();
+    if (del(el)){
+      el.parentNode.removeChild(el);
+    };
     el = tmp; //Vrátí původní element (když byl nahrazen při pohybu spojených elementů)
     dlt.style.visibility = "hidden"
   }
@@ -76,27 +86,28 @@ function dragElement(el) {
       } 
     });  
   }
-  //Mazání elementů
-  function del(){
+  //Element je v mazacím boxu
+  function del(element){
     dltleft = parseInt($("#dlt").css("left"),10) - $("#siz").width();
     dltright = dltleft + dlt.offsetWidth;
     dltbottom = dlt.offsetHeight;
-    eltop = parseInt(el.style.top,10);
-    elleft = parseInt(el.style.left,10);
-    elright = parseInt(el.style.left,10) + el.offsetWidth;
+    eltop = parseInt(element.style.top,10);
+    elleft = parseInt(element.style.left,10);
+    elright = parseInt(element.style.left,10) + el.offsetWidth;
     //Pokud je ve správné úrovni
     if (eltop < dltbottom){
       //Z prava a střed
       if ((elleft < dltright) && (elright > dltright)){
-        if (el.id === "Run"){} else if (el.firstChild.id === "Run") {} else { //Ochrana run tlačítka
-          el.parentNode.removeChild(el);
+        if (element.id === "Run"){} else if (element.firstChild.id === "Run") {} else { //Ochrana run tlačítka
+          return true;
         } 
       //Z leva
       } else if ((elright > dltleft) && (elleft < dltright)){
-        if (el.id === "Run"){} else if (el.firstChild.id === "Run") {} else { //Ochrana run tlačítka
-          el.parentNode.removeChild(el);
+        if (element.id === "Run"){} else if (element.firstChild.id === "Run") {} else { //Ochrana run tlačítka
+          return true;
         } 
       }
     }
+    return false;
   }
 }
