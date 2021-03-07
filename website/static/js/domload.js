@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    var j = create_element("1dsad");
-    var d = create_element("2");
-    combine_elements(j,d);
-    Carets();
-    Run_but();
+  Delete_box();
+  var j = create_element("1dsad");
+  var d = create_element("2");
+  combine_elements(j,d);
+  Carets();
+  Run_but();
 });
 
 //Js pro ovládání rozklikávacího menu
@@ -31,4 +32,15 @@ function Run_but(){
     Runbut.innerHTML = "▶️"
     Runbut.classList.add("Run")
     Run_button.children[1].appendChild(Runbut)
+}
+
+//Vytvoří pole pro mazání
+function Delete_box(){
+  var div = document.createElement('div')
+  div.innerHTML = "Pro smazání přesuň zde"
+  div.classList.add("dlt")
+  div.id = "dlt"
+  div.style.visibility = "hidden"
+  var container = document.getElementById('container')
+  container.appendChild(div)
 }

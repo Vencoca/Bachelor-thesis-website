@@ -1,9 +1,12 @@
 function dragElement(el) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0, tmp = el;
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0, tmp = el; dlt = document.getElementById('dlt');
   //Přiřadí do nadpisu funkci na posouvání po kliknutí myší
   el.firstChild.onmousedown = dragMouseDown;
   //Posouvání po kliknutí myší
   function dragMouseDown(e) {
+    //Zabrání označování textu při pohybu s boxy
+    e = e || window.event; 
+    e.preventDefault();
     // Výchozí pozice kurzoru
     pos3 = e.clientX;
     pos4 = e.clientY;
@@ -12,13 +15,14 @@ function dragElement(el) {
   }
   //Posouvání
   function Drag(e) {
+    dlt.style.visibility = "visible"
     e = e || window.event;
     e.preventDefault();
     //Nová pozice kurzoru
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
     //Pohyb spojených elementů - fuknci volá každý nadpis zvlášť, nutno posouvat celým celkem
     if (el.parentElement.classList.contains("combine"))
     {
@@ -44,7 +48,9 @@ function dragElement(el) {
     document.onmousemove = null;
     el.style.zIndex = "0"; 
     combine(); //Kontroluje jestli se nemá něco spojit
+    del();
     el = tmp; //Vrátí původní element (když byl nahrazen při pohybu spojených elementů)
+    dlt.style.visibility = "hidden"
   }
   //Připojování boxů k sobě - kontroluje jestli po ukončení pohybu se nenachází v okolí elementu se kterým by se měl spojit
   function combine(){
@@ -62,16 +68,35 @@ function dragElement(el) {
         rang = 10;
         //Připojení zleva
         if ((((eltop -rang) < elementtop) && ((eltop + rang) > elementtop)) && (((elright -rang) < elementleft) && ((elright + rang) > elementleft))){
-          if (element.id === "Run_button"){} else {
-            combine_elements(el,element);
-          }
+          combine_elements(el,element);
         //Připojení zprava
         } else if ((((eltop -rang) < elementtop) && ((eltop + rang) > elementtop)) && (((elleft -rang) < elementright) && ((elleft + rang) > elementright))){
-          if (el.id === "Run_button"){} else {
-            combine_elements(element,el);
-          }
+          combine_elements(element,el);
         }
       } 
     });  
+  }
+  //Mazání elementů
+  function del(){
+    dltleft = parseInt($("#dlt").css("left"),10) - $("#siz").width();
+    dltright = dltleft + dlt.offsetWidth;
+    dltbottom = dlt.offsetHeight;
+    eltop = parseInt(el.style.top,10);
+    elleft = parseInt(el.style.left,10);
+    elright = parseInt(el.style.left,10) + el.offsetWidth;
+    //Pokud je ve správné úrovni
+    if (eltop < dltbottom){
+      //Z prava a střed
+      if ((elleft < dltright) && (elright > dltright)){
+        if (el.id === "Run"){} else if (el.firstChild.id === "Run") {} else { //Ochrana run tlačítka
+          el.parentNode.removeChild(el);
+        } 
+      //Z leva
+      } else if ((elright > dltleft) && (elleft < dltright)){
+        if (el.id === "Run"){} else if (el.firstChild.id === "Run") {} else { //Ochrana run tlačítka
+          el.parentNode.removeChild(el);
+        } 
+      }
+    }
   }
 }

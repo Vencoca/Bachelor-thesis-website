@@ -1,4 +1,16 @@
 body {font-family: "Lato", sans-serif; height: 100vh;}
+
+#dlt{
+  background-color: #2196F3;
+  width: max-content;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  left: 50%;
+  position: fixed;
+  color:#f1f1f1;
+}
+
 #sidebar{
   background: gainsboro;
 }
