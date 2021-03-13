@@ -16,7 +16,7 @@ class Block(models.Model):
     name = models.CharField(max_length = 50)
     code = models.CharField(max_length = 1000)
     alternative = models.CharField(max_length = 300,default='')
-    lib = models.ForeignKey(Lib, on_delete=models.CASCADE,default='') #Odkaz ke kterému bloku je přiřazen posuvník
+    lib = models.ForeignKey(Lib, on_delete=models.CASCADE,default='') #Odkaz ke které knihovně je přiřazen blok
     def __unicode__(self):
         return u'%s' % self.name
 
@@ -36,7 +36,7 @@ class NuField(models.Model): #Number Field
     minimum = models.IntegerField() 
     maximum = models.IntegerField()
     default = models.IntegerField() #Výchozí hodnota pole
-    block = models.ForeignKey(Block, on_delete=models.CASCADE) #Odkaz ke kterému bloku je přiřazen pole
+    block = models.ForeignKey(Block, on_delete=models.CASCADE) #Odkaz ke kterému bloku je přiřazeno pole
 
     def __unicode__(self):
         return u'%s : %s' % (self.block.name, self.name)
@@ -44,8 +44,7 @@ class NuField(models.Model): #Number Field
 class ChField(models.Model): #Character Field
     name =  models.CharField(max_length = 50, default='') #Jméno pole
     alternative = models.CharField(max_length = 300,default='')
-    text = forms.CharField(required=False) #Výchozí hodnota textu
-    block = models.ForeignKey(Block, on_delete=models.CASCADE) #Odkaz ke kterému bloku je přiřazen pole
+    block = models.ForeignKey(Block, on_delete=models.CASCADE) #Odkaz ke kterému bloku je přiřazeno pole
 
     def __unicode__(self):
         return u'%s : %s' % (self.block.name, self.name)

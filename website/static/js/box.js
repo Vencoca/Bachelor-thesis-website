@@ -72,7 +72,7 @@ function create_element(ID){
                 Cha_div.appendChild(document.createElement('br'));
                 var text = document.createElement("input")
                 text.setAttribute("type","text")
-                text.value = ChaField.fields.default;
+                text.value = "";
                 Cha_div.appendChild(text)
                 spaceholder.appendChild(Cha_div)
             }

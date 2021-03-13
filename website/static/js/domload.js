@@ -14,7 +14,7 @@ function Libs(lib,all_block){
   lib.forEach(element => library(element)); 
   var all_block = JSON.parse(all_block)
   all_block.forEach(element => blocks(element));
-
+  //Vytvoří knihovny
   function library(lib){
     var li = document.createElement('li')
     var span = document.createElement('span')
@@ -27,7 +27,7 @@ function Libs(lib,all_block){
     li.appendChild(nested)
     Libs.appendChild(li)
   }
-
+  //vyplní knihovny bloky
   function blocks(block){
     var li = document.createElement('li')
     li.id = block.fields.name;
@@ -43,7 +43,6 @@ function Libs(lib,all_block){
     span.appendChild(document.createTextNode(block.fields.name))
     li.appendChild(span)
     document.getElementById("lib" + block.fields.lib).appendChild(li)
-    //Libs.children[parseInt(block.fields.lib,10)].children[1].appendChild(li)
   }
 }
 
