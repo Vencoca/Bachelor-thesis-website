@@ -17,14 +17,17 @@
                         <div class="col-12" id = "nav">Navigation</div>
                     </div>
                     <div class="row">
-                        <ul id= "blocks">
+                        <ul id= "Lib">
+                             <!--
                             <li><span class="caret">Default blocks</span>
                                 <ul class="nested">
+                               
                                 {% for block in all_block%}
                                     <li id = "{{block.name}}" onclick="create_element(this.id)" ><span class="span-click"><i class="fa fa-cubes" style="margin-right: 6px;"></i>{{block.name}}</span></li>
                                 {% endfor %}
                                 </ul>
                             </li>
+                            -->
                         </ul>
                     </div>    
                 </div>
@@ -38,4 +41,9 @@
     <script src="{% static 'js/drag.js' %}"></script> 
     <script src="{% static 'js/box.js' %}"></script> 
     <script src="{% static 'js/domload.js' %}"></script> 
+    <script>
+        var all_block = '{{ all_block|escapejs }}';
+        var lib = '{{ lib|escapejs }}';
+        Libs(lib,all_block)
+    </script>
 </html>

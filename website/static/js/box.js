@@ -30,25 +30,52 @@ function create_element(ID){
         id : ID
         },
         success: function(response){
-        var arr_from_json = JSON.parse( response.qs)
-        arr_from_json.forEach(element => Slider(element)); 
-        function Slider(Slider) { //Vytvoření posuvníku a vložení jména a čísla s současnou hodnotou
-            var slider_div= document.createElement('div')
-            var text = document.createElement('span')
-            text.innerHTML = Slider.fields.default
-            slider_div.appendChild(document.createTextNode(Slider.fields.name));
-            slider_div.appendChild(document.createElement('br'));
-            slider_div.appendChild(text)
-            var range = document.createElement("input")
-            range.setAttribute("type", "range");
-            range.setAttribute("min", Slider.fields.minimum);
-            range.setAttribute("max",  Slider.fields.maximum);
-            range.value = Slider.fields.default;
-            range.setAttribute("onchange", "updateTextInput(this.value,this);");
-            range.classList.add("form-control-range")
-            slider_div.appendChild(range)
-            spaceholder.appendChild(slider_div)
-        } 
+            var slider = JSON.parse(response.slider)
+            slider.forEach(element => Slider(element)); 
+            var cha_field = JSON.parse(response.cha_field)
+            cha_field.forEach(element => ChaField(element)); 
+            var nu_field = JSON.parse(response.nu_field)
+            nu_field.forEach(element => NuField(element)); 
+
+            function Slider(Slider) { //Vytvoření posuvníku a vložení jména a čísla s současnou hodnotou
+                var slider_div= document.createElement('div')
+                var text = document.createElement('span')
+                text.innerHTML = Slider.fields.default
+                slider_div.appendChild(document.createTextNode(Slider.fields.name));
+                slider_div.appendChild(document.createElement('br'));
+                slider_div.appendChild(text)
+                var range = document.createElement("input")
+                range.setAttribute("type", "range");
+                range.setAttribute("min", Slider.fields.minimum);
+                range.setAttribute("max",  Slider.fields.maximum);
+                range.value = Slider.fields.default;
+                range.setAttribute("onchange", "updateTextInput(this.value,this);");
+                range.classList.add("form-control-range")
+                slider_div.appendChild(range)
+                spaceholder.appendChild(slider_div)
+            }
+            function NuField(NuField){
+                var nu_div = document.createElement('div')
+                nu_div.appendChild(document.createTextNode(NuField.fields.name))
+                nu_div.appendChild(document.createElement('br'));
+                var number = document.createElement("input")
+                number.setAttribute("type","number")
+                number.setAttribute("min", NuField.fields.minimum);
+                number.setAttribute("max",  NuField.fields.maximum);
+                number.value = NuField.fields.default;
+                nu_div.appendChild(number)
+                spaceholder.appendChild(nu_div)
+            }
+            function ChaField(ChaField){
+                var Cha_div = document.createElement('div')
+                Cha_div.appendChild(document.createTextNode(ChaField.fields.name))
+                Cha_div.appendChild(document.createElement('br'));
+                var text = document.createElement("input")
+                text.setAttribute("type","text")
+                text.value = ChaField.fields.default;
+                Cha_div.appendChild(text)
+                spaceholder.appendChild(Cha_div)
+            }
         }
     })
     //Vytvoření vztahů mezi objekty

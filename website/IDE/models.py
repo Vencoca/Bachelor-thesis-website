@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
+from django import forms
+
+class Lib(models.Model):
+    name = models.CharField(max_length = 50)
+    def __unicode__(self):
+        return u'%s' % self.name
 
 class Sequence(models.Model):
     name = models.CharField(max_length = 50)
@@ -8,16 +15,37 @@ class Sequence(models.Model):
 class Block(models.Model):
     name = models.CharField(max_length = 50)
     code = models.CharField(max_length = 1000)
-
-    def __str__(self):
-        return self.name
+    alternative = models.CharField(max_length = 300,default='')
+    lib = models.ForeignKey(Lib, on_delete=models.CASCADE,default='') #Odkaz ke kterému bloku je přiřazen posuvník
+    def __unicode__(self):
+        return u'%s' % self.name
 
 class Slider(models.Model):
-    name =  models.CharField(max_length = 50, default='def_name') #Jméno posuvníku
+    name =  models.CharField(max_length = 50, default='') #Jméno posuvníku
+    alternative = models.CharField(max_length = 300,default='')
     minimum = models.IntegerField() 
     maximum = models.IntegerField()
     default = models.IntegerField() #Výchozí hodnota posuvníku
     block = models.ForeignKey(Block, on_delete=models.CASCADE) #Odkaz ke kterému bloku je přiřazen posuvník
+    def __unicode__(self):
+        return u'%s : %s' % (self.block.name, self.name)
 
-    def __str__(self):
-        return self.block.name
+class NuField(models.Model): #Number Field
+    name =  models.CharField(max_length = 50, default='') #Jméno pole
+    alternative = models.CharField(max_length = 300,default='')
+    minimum = models.IntegerField() 
+    maximum = models.IntegerField()
+    default = models.IntegerField() #Výchozí hodnota pole
+    block = models.ForeignKey(Block, on_delete=models.CASCADE) #Odkaz ke kterému bloku je přiřazen pole
+
+    def __unicode__(self):
+        return u'%s : %s' % (self.block.name, self.name)
+
+class ChField(models.Model): #Character Field
+    name =  models.CharField(max_length = 50, default='') #Jméno pole
+    alternative = models.CharField(max_length = 300,default='')
+    text = forms.CharField(required=False) #Výchozí hodnota textu
+    block = models.ForeignKey(Block, on_delete=models.CASCADE) #Odkaz ke kterému bloku je přiřazen pole
+
+    def __unicode__(self):
+        return u'%s : %s' % (self.block.name, self.name)

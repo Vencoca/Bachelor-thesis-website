@@ -7,6 +7,46 @@ document.addEventListener("DOMContentLoaded", () => {
   Run_but();
 });
 
+
+function Libs(lib,all_block){
+  var Libs = document.getElementById("Lib") //Ul v hmtl kam se má vkládat
+  var lib = JSON.parse(lib) //Data z Json
+  lib.forEach(element => library(element)); 
+  var all_block = JSON.parse(all_block)
+  all_block.forEach(element => blocks(element));
+
+  function library(lib){
+    var li = document.createElement('li')
+    var span = document.createElement('span')
+    var nested = document.createElement('ul')
+    nested.id = ("lib" + lib.pk)
+    nested.classList.add("nested")
+    span.classList.add("caret")
+    span.innerHTML = lib.fields.name;
+    li.appendChild(span)
+    li.appendChild(nested)
+    Libs.appendChild(li)
+  }
+
+  function blocks(block){
+    var li = document.createElement('li')
+    li.id = block.fields.name;
+    li.addEventListener("click", function(){
+      create_element(li.id)
+    });
+    var span = document.createElement('span')
+    span.classList.add("span-click")
+    var i = document.createElement('i')
+    i.classList.add("fa", "fa-cubes")
+    i.style.marginRight = "6px"
+    span.appendChild(i)
+    span.appendChild(document.createTextNode(block.fields.name))
+    li.appendChild(span)
+    document.getElementById("lib" + block.fields.lib).appendChild(li)
+    //Libs.children[parseInt(block.fields.lib,10)].children[1].appendChild(li)
+  }
+}
+
 //Js pro ovládání rozklikávacího menu
 function Carets(){
     var toggler = document.getElementsByClassName("caret");

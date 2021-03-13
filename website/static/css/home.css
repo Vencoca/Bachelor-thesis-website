@@ -9,6 +9,8 @@ body {font-family: "Lato", sans-serif; height: 100vh;}
   left: 50%;
   position: fixed;
   color:#f1f1f1;
+  width: 250px;
+  text-align: center;
 }
 
 #sidebar{
