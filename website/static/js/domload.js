@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   Delete_box();
-  var j = create_element("1dsad");
-  var d = create_element("2");
-  combine_elements(j,d);
   Carets();
   Run_but();
 });
@@ -70,6 +67,9 @@ function Run_but(){
     Runbut.id = "Run"
     Runbut.innerHTML = "▶️"
     Runbut.classList.add("Run")
+    Runbut.addEventListener("click", function(){
+      Run_send()
+    });
     Run_button.children[1].appendChild(Runbut)
 }
 
@@ -82,4 +82,28 @@ function Delete_box(){
   div.style.visibility = "hidden"
   var container = document.getElementById('container')
   container.appendChild(div)
+}
+
+
+//Funkce na odesílání dat na server
+function Run_send(){
+  var data = "";
+  var Run_button = document.getElementById("Run")
+  if (Run_button.parentElement.classList.contains("combine")){ //Pokud je Run_button s něčím spojený
+    var children = Array.prototype.slice.call(Run_button.parentElement.children)
+    children.shift();
+    children.forEach(element => { //Projdou se elementy
+      data = data.concat(element.id)
+      data = data.concat(":")
+      var childrenofelement = Array.prototype.slice.call(element.children[1].children)
+      childrenofelement.forEach(elmnt => {
+        data = data.concat(elmnt.childNodes[0].nodeValue)
+        data = data.concat("_")
+        data = data.concat(elmnt.querySelectorAll("input")[0].value)
+        data = data.concat(",")
+      });
+      data = data.concat(";")
+    });
+  }
+  console.log(data)
 }
