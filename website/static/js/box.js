@@ -49,7 +49,7 @@ function create_element(ID){
                 range.setAttribute("min", Slider.fields.minimum);
                 range.setAttribute("max",  Slider.fields.maximum);
                 range.value = Slider.fields.default;
-                range.setAttribute("onchange", "updateTextInput(this.value,this);");
+                range.setAttribute("oninput", "updateTextInput(this.value,this);");
                 range.classList.add("form-control-range")
                 slider_div.appendChild(range)
                 spaceholder.appendChild(slider_div)
