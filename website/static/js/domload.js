@@ -87,23 +87,31 @@ function Delete_box(){
 
 //Funkce na odesílání dat na server
 function Run_send(){
-  var data = "";
+  var dta = "";
   var Run_button = document.getElementById("Run")
   if (Run_button.parentElement.classList.contains("combine")){ //Pokud je Run_button s něčím spojený
     var children = Array.prototype.slice.call(Run_button.parentElement.children)
     children.shift();
     children.forEach(element => { //Projdou se elementy
-      data = data.concat(element.id)
-      data = data.concat(":")
+      dta = dta.concat(element.id)
+      dta = dta.concat(":")
       var childrenofelement = Array.prototype.slice.call(element.children[1].children)
       childrenofelement.forEach(elmnt => {
-        data = data.concat(elmnt.childNodes[0].nodeValue)
-        data = data.concat("_")
-        data = data.concat(elmnt.querySelectorAll("input")[0].value)
-        data = data.concat(",")
+        dta = dta.concat(elmnt.childNodes[0].nodeValue)
+        dta = dta.concat("_")
+        dta = dta.concat(elmnt.querySelectorAll("input")[0].value)
+        dta = dta.concat(",")
       });
-      data = data.concat(";")
+      dta = dta.concat(";")
     });
+    $.ajax({ 
+      url: '',
+      type: 'post',
+      data: {
+      DTA : dta
+      },
+      success: function(response){
+      }
+    })
   }
-  console.log(data)
 }

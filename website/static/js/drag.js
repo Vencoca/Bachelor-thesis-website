@@ -78,10 +78,14 @@ function dragElement(el) {
         rang = 10;
         //Připojení zleva
         if ((((eltop -rang) < elementtop) && ((eltop + rang) > elementtop)) && (((elright -rang) < elementleft) && ((elright + rang) > elementleft))){
-          combine_elements(el,element);
+          if ((element.id === "Run") || (element.firstChild.id === "Run")){} else {
+            combine_elements(el,element);
+          }
         //Připojení zprava
         } else if ((((eltop -rang) < elementtop) && ((eltop + rang) > elementtop)) && (((elleft -rang) < elementright) && ((elleft + rang) > elementright))){
-          combine_elements(element,el);
+          if ((el.id === "Run") || (el.firstChild.id === "Run")){} else {
+            combine_elements(element,el);
+          }  
         }
       } 
     });  

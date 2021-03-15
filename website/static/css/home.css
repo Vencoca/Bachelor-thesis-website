@@ -1,5 +1,10 @@
 body {font-family: "Lato", sans-serif; height: 100vh;}
 
+.combine{
+  display: flex;
+
+}
+
 #dlt{
   background-color: #2196F3;
   width: max-content;
