@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
 from models import Lib,Block, Sequence, Slider,ChField,NuField
 
-from time import time
+import time
 from django.http import JsonResponse
 from json import dumps 
 from django.core import serializers
@@ -27,6 +27,7 @@ def index(request):
             return JsonResponse(data,status=200)
         elif request.method == 'POST':
             data = request.POST.get('DTA')
+            time.sleep(5)
             prepare_data(data)
             return HttpResponse('')
     lib = serializers.serialize('json',Lib.objects.all())

@@ -64,8 +64,10 @@ function Run_but(){
     Run_button.children[1].classList.remove("form-group")
     Run_button.children[1].classList.add("spaceholder")
     var Runbut = document.createElement('button')
-    Runbut.id = "Run"
-    Runbut.innerHTML = "▶️"
+    Runbut.id = "Runer"
+    var i = document.createElement('i')
+    i.classList.add("fa", "fa-play", "runico")
+    Runbut.appendChild(i)
     Runbut.classList.add("Run")
     Runbut.addEventListener("click", function(){
       Run_send()
@@ -104,6 +106,9 @@ function Run_send(){
       });
       dta = dta.concat(";")
     });
+    
+    document.getElementById("Runer").disabled = true;
+    document.getElementById("Runer").firstChild.style.color = "gray";
     $.ajax({ 
       url: '',
       type: 'post',
@@ -111,6 +116,8 @@ function Run_send(){
       DTA : dta
       },
       success: function(response){
+      document.getElementById("Runer").disabled = false;
+      document.getElementById("Runer").firstChild.style.color = "black";
       }
     })
   }

@@ -1,5 +1,11 @@
 body {font-family: "Lato", sans-serif; height: 100vh;}
 
+.runico{
+  color: black;
+  background-color: inherit;
+  padding: 6px;
+}
+
 .combine{
   display: flex;
 
@@ -64,7 +70,7 @@ ul{
 
 .Run{
   cursor: pointer;
-  border: none;
+  /*border: none;*/
   background-color: inherit;
   font-size: 30px;
 }
