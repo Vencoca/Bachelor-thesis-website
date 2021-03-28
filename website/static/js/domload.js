@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  Delete_box();
   Carets();
-  Run_but();
 });
 
 
@@ -56,7 +54,7 @@ function Carets(){
 }
 
 //Vytvoří RUN tlačítko
-function Run_but(){
+function Run_but(robots){
     var Run_button = create_element("Run")
     Run_button.children[0].children[0].style.visibility = "hidden"
     Run_button.style.top = "40%"
@@ -73,6 +71,20 @@ function Run_but(){
       Run_send()
     });
     Run_button.children[1].appendChild(Runbut)
+
+    var dropdown = document.createElement("select")
+    dropdown.id = "Robot-select"
+    var rob = JSON.parse(robots)
+    rob.forEach(element => add_robot(element));
+    Run_button.children[1].appendChild(dropdown)
+    //Přidávání robotů do dropdown menu
+    function add_robot(robot){
+      var option = document.createElement("option")
+      var string = robot.fields.name + " " + robot.fields.ip + ":" + robot.fields.port
+      option.setAttribute("value",string)
+      option.innerHTML = string
+      dropdown.appendChild(option)
+    }
 }
 
 //Vytvoří pole pro mazání
@@ -109,6 +121,7 @@ function Run_send(){
     
     document.getElementById("Runer").disabled = true;
     document.getElementById("Runer").firstChild.style.color = "gray";
+    document.getElementById("Robot-select").disabled = true;
     $.ajax({ 
       url: '',
       type: 'post',
@@ -118,6 +131,7 @@ function Run_send(){
       success: function(response){
       document.getElementById("Runer").disabled = false;
       document.getElementById("Runer").firstChild.style.color = "black";
+      document.getElementById("Robot-select").disabled = false;
       }
     })
   }

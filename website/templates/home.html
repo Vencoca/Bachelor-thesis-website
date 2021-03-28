@@ -35,6 +35,9 @@
     <script>
         var all_block = '{{ all_block|escapejs }}';
         var lib = '{{ lib|escapejs }}';
+        var robots = '{{ robots|escapejs }}';
+        Delete_box();
         Libs(lib,all_block)
+        Run_but(robots);
     </script>
 </html>

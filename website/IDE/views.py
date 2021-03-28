@@ -4,15 +4,17 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
-from models import Lib,Block, Sequence, Slider,ChField,NuField
+from models import Lib,Block, Sequence, Slider,ChField,NuField,Robot
 
 import time
 from django.http import JsonResponse
 from json import dumps 
 from django.core import serializers
+import Robot as R
 
 @csrf_exempt
 def index(request):
+    robot_init() #Při prvním spuštění serveru nainicalizuje roboty
     if request.is_ajax(): #Pokud je pozadavek ajax, vrati posuvniky z databaze
         if request.method == 'GET':
             id = request.GET.get('id')
@@ -32,13 +34,20 @@ def index(request):
             return HttpResponse('')
     lib = serializers.serialize('json',Lib.objects.all())
     all_block = serializers.serialize('json',Block.objects.all())
+    robots = serializers.serialize('json',Robot.objects.all())
     data = {
         'all_block' : all_block,
-        'lib' : lib
+        'lib' : lib,
+        'robots' : robots
     }
 
     return render(request, "home.html", data)
 
+
+def robot_init(): 
+    R.Robot("1111","YEET") 
+    print("once")
+    robot_init.func_code = (lambda:None).func_code
 
 def prepare_data(data):
     split_strings = data.split(";")

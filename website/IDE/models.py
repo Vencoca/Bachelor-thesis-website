@@ -4,6 +4,13 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 from django import forms
 
+class Robot(models.Model):
+    name = models.CharField(max_length=50)
+    ip = models.CharField(max_length = 50)
+    port = models.CharField(max_length = 50)
+    def __unicode__(self):
+        return u'%s' % self.name
+
 class Lib(models.Model):
     name = models.CharField(max_length = 50)
     def __unicode__(self):
