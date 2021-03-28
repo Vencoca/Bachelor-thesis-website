@@ -2,7 +2,7 @@
 import time
 
 class Robot():
-    def __init__(self,ip,name):
+    def __init__(self,ip,port,name):
         print("inicializace")
         self.name = name
         self.tts = ip

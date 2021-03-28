@@ -118,7 +118,7 @@ function Run_send(){
       });
       dta = dta.concat(";")
     });
-    
+    rbt = document.getElementById("Robot-select").value;
     document.getElementById("Runer").disabled = true;
     document.getElementById("Runer").firstChild.style.color = "gray";
     document.getElementById("Robot-select").disabled = true;
@@ -126,7 +126,8 @@ function Run_send(){
       url: '',
       type: 'post',
       data: {
-      DTA : dta
+      DTA : dta,
+      rbt : rbt
       },
       success: function(response){
       document.getElementById("Runer").disabled = false;

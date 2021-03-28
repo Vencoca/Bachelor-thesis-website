@@ -14,7 +14,6 @@ import Robot as R
 
 @csrf_exempt
 def index(request):
-    robot_init() #Při prvním spuštění serveru nainicalizuje roboty
     if request.is_ajax(): #Pokud je pozadavek ajax, vrati posuvniky z databaze
         if request.method == 'GET':
             id = request.GET.get('id')
@@ -29,8 +28,13 @@ def index(request):
             return JsonResponse(data,status=200)
         elif request.method == 'POST':
             data = request.POST.get('DTA')
+            rbt = request.POST.get('rbt')
+
+            ip,port,name = robot_init(rbt)
+            robot_class = R.Robot(ip,port,name)
             time.sleep(5)
-            prepare_data(data)
+            
+            prepare_data(data,robot_class)
             return HttpResponse('')
     lib = serializers.serialize('json',Lib.objects.all())
     all_block = serializers.serialize('json',Block.objects.all())
@@ -44,12 +48,22 @@ def index(request):
     return render(request, "home.html", data)
 
 
-def robot_init(): 
-    R.Robot("1111","YEET") 
-    print("once")
-    robot_init.func_code = (lambda:None).func_code
+#def robot_init(): 
+#    R.Robot("1111","123","YEET") 
+#    print("once")
+#    robot_init.func_code = (lambda:None).func_code
 
-def prepare_data(data):
+def robot_init(data):
+    split_strings = data.split(" ")
+    name = split_strings[0]
+    split_strings = split_strings[1]
+    split_strings = split_strings.split(":")
+    ip = split_strings[0]
+    port = split_strings[1]
+    return ip,port,name
+
+
+def prepare_data(data, robot):
     split_strings = data.split(";")
     split_strings.pop()
     for i in split_strings: #projde všechny bloky
@@ -61,6 +75,7 @@ def prepare_data(data):
         code = block.code
         for cd in code_array:
             code = code.replace("$r" + str(j),cd.split("_")[1])
+            code = code.replace ("@r","robot")
             j = j + 1
         try:
             exec(code)
