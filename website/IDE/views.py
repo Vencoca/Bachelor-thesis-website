@@ -33,7 +33,7 @@ def index(request):
             ip,port,name = robot_init(rbt)
             robot_class = R.Robot(ip,port,name)
             time.sleep(5)
-            
+
             prepare_data(data,robot_class)
             return HttpResponse('')
     lib = serializers.serialize('json',Lib.objects.all())
