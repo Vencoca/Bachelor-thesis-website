@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -32,8 +31,6 @@ def index(request):
 
             ip,port,name = robot_init(rbt)
             robot_class = R.Robot(ip,port,name)
-            time.sleep(5)
-
             prepare_data(data,robot_class)
             return HttpResponse('')
     lib = serializers.serialize('json',Lib.objects.all())
@@ -47,11 +44,6 @@ def index(request):
 
     return render(request, "home.html", data)
 
-
-#def robot_init(): 
-#    R.Robot("1111","123","YEET") 
-#    print("once")
-#    robot_init.func_code = (lambda:None).func_code
 
 def robot_init(data):
     split_strings = data.split(" ")
@@ -78,7 +70,8 @@ def prepare_data(data, robot):
             code = code.replace ("@r","robot")
             j = j + 1
         try:
-            exec(code)
-        except:
-            print("Cant execute code")
+            exec(code)  
+        except Exception, e:
+            print "Could not execute code"
+            print "Error was: ", e
     

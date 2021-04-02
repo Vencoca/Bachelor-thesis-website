@@ -1,40 +1,38 @@
-#from naoqi import ALProxy
+# -*- coding: utf-8 -*-
+import unicodedata
+from naoqi import ALProxy
 import time
 
-class Robot():
-    def __init__(self,ip,port,name):
+
+"""
+class Robot_Control():
+    def __init__(self,ip,name):
         print("inicializace")
-        self.name = name
-        self.tts = ip
-        self.pos = ip
-        self.mot = ip
-        self.memory = ip
-        self.sonar = ip
-        self.motion = ip
+        time.sleep(0.5)
+    def standsit(self):
+        print("standsit")
+        time.sleep(0.5)
+    def move(self,x,y,z):
+        print("moving to: x - ",x," y - ", y, " z -",z)
+        time.sleep(0.5)
+    def say(self, sentence):
+        print(sentence)
         time.sleep(0.5)
 """
 
-class Robot_Control():
-    def __init__(self, ip, name):
-        PORT = 9559
+class Robot():
+    def __init__(self, ip, port, name):
+        ip = unicodedata.normalize('NFKD', ip).encode('ascii', 'ignore')
+        PORT = int(port)
         self.name = name
-        self.tts = ALProxy("ALTextToSpeech", ip, PORT)
-        self.pos = ALProxy("ALRobotPosture", ip, PORT)
-        self.mot = ALProxy("ALMotion", ip, PORT)
-        self.memory = ALProxy("ALMemory",ip, PORT)
-        self.sonar = ALProxy("ALSonar", ip , PORT)
-        self.motion = ALProxy("ALMotion", ip, PORT)
-        self.posture = "Stand"
-    def standsit(self):
-        if self.posture == "Sit":
-            self.pos.goToPosture("StandInit", 1.0)
-            self.posture = "Stand"
-        else:
-            self.pos.goToPosture("Sit", 1.0)
-            self.posture = "Sit"
-    def move(self,x,y,r):
-        if self.posture == "Stand": 
-            self.mot.walkTo(x,y,r)
-    def say(self,sentence):
-        self.tts.say(sentence)
-"""
+        try:
+            self.tts = ALProxy("ALTextToSpeech", ip, PORT)
+            self.pos = ALProxy("ALRobotPosture", ip, PORT)
+            self.mot = ALProxy("ALMotion", ip, PORT)
+            self.memory = ALProxy("ALMemory",ip, PORT)
+            self.sonar = ALProxy("ALSonar", ip , PORT)
+            self.motion = ALProxy("ALMotion", ip, PORT)
+        except Exception, e:
+            print "Could not init robot"
+            print "Error was: ", e
+

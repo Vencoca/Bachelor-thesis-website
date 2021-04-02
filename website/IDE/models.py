@@ -21,7 +21,7 @@ class Sequence(models.Model):
 
 class Block(models.Model):
     name = models.CharField(max_length = 50)
-    code = models.CharField(max_length = 1000)
+    code = models.TextField('code')
     alternative = models.CharField(max_length = 300,default='')
     lib = models.ForeignKey(Lib, on_delete=models.CASCADE,default='') #Odkaz ke které knihovně je přiřazen blok
     def __unicode__(self):
