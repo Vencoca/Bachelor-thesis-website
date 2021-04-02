@@ -20,6 +20,7 @@ class Robot_Control():
         print(sentence)
         time.sleep(0.5)
 """
+stop = False
 
 class Robot():
     def __init__(self, ip, port, name):

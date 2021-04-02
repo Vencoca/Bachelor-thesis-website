@@ -29,13 +29,17 @@ def index(request):
             }
             return JsonResponse(data,status=200)
         elif request.method == 'POST':
-            data = request.POST.get('DTA')
-            rbt = request.POST.get('rbt')
-
-            ip,port,name = robot_init(rbt)
-            robot_class = R.Robot(ip,port,name)
-            prepare_data(data,robot_class)
+            if (request.POST.get('stop')):
+                R.stop = True
+            else:
+                data = request.POST.get('DTA')
+                rbt = request.POST.get('rbt')
+                ip,port,name = robot_init(rbt)
+                robot_class = R.Robot(ip,port,name)
+                prepare_data(data,robot_class)
+                R.stop = False
             return HttpResponse('')
+
     lib = serializers.serialize('json',Lib.objects.all())
     all_block = serializers.serialize('json',Block.objects.all())
     robots = serializers.serialize('json',Robot.objects.all())
@@ -44,37 +48,37 @@ def index(request):
         'lib' : lib,
         'robots' : robots
     }
-
+    
     return render(request, "home.html", data)
 
-
 def robot_init(data):
-    split_strings = data.split(" ")
-    name = split_strings[0]
-    split_strings = split_strings[1]
-    split_strings = split_strings.split(":")
-    ip = split_strings[0]
-    port = split_strings[1]
-    return ip,port,name
+        split_strings = data.split(" ")
+        name = split_strings[0]
+        split_strings = split_strings[1]
+        split_strings = split_strings.split(":")
+        ip = split_strings[0]
+        port = split_strings[1]
+        return ip,port,name
 
 
 def prepare_data(data, robot):
     split_strings = data.split(";")
     split_strings.pop()
     for i in split_strings: #projde všechny bloky
-        splited_i = i.split(":")
-        block = Block.objects.filter(name__contains=splited_i[0])[0]
-        code_array = splited_i[1].split("^")
-        code_array.pop()
-        j = 1
-        code = block.code
-        for cd in code_array:
-            code = code.replace("$r" + str(j),cd.split("_")[1])
-            code = code.replace ("@r","robot")
-            j = j + 1
-        try:
-            exec(code)  
-        except Exception, e:
-            print "Could not execute code"
-            print "Error was: ", e
+        if (not(R.stop)):
+            splited_i = i.split(":")
+            block = Block.objects.filter(name__contains=splited_i[0])[0]
+            code_array = splited_i[1].split("^")
+            code_array.pop()
+            j = 1
+            code = block.code
+            for cd in code_array:
+                code = code.replace("$r" + str(j),cd.split("_")[1])
+                code = code.replace ("@r","robot")
+                j = j + 1
+            try:
+                exec(code)  
+            except Exception, e:
+                print "Could not execute code"
+                print "Error was: ", e
     

@@ -137,3 +137,15 @@ function Run_send(){
     })
   }
 }
+
+function Stop(){
+  $.ajax({ 
+    url: '',
+    type: 'post',
+    data: {
+      stop: true,
+    },
+    success: function(response){
+    }
+  })
+}
