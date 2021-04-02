@@ -1,5 +1,5 @@
 //Vytvoření elementu kterým se dá posouvat
-function create_element(ID){
+function create_element(ID,alternative){
     var div = document.createElement('div'); 
     div.classList.add("drag");
     div.id = ID;
@@ -22,6 +22,10 @@ function create_element(ID){
     out.innerHTML = " "
     out.id = 'out';
     out.classList.add('btn-connect');
+    //Přidání tooltipu
+    div.setAttribute("data-toggle","tooltip")
+    div.setAttribute("data-placement","bottom")
+    div.setAttribute("title", alternative)
     //Ajax dotaz na server jestli ma block posuvníky
     $.ajax({ 
         url: '',

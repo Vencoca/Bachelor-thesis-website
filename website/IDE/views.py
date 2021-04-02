@@ -4,14 +4,17 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
 from models import Lib,Block, Sequence, Slider,ChField,NuField,Robot
-
+from django.contrib.auth.decorators import login_required
 import time
 from django.http import JsonResponse
 from json import dumps 
 from django.core import serializers
 import Robot as R
+import math
+
 
 @csrf_exempt
+@login_required
 def index(request):
     if request.is_ajax(): #Pokud je pozadavek ajax, vrati posuvniky z databaze
         if request.method == 'GET':
@@ -61,7 +64,7 @@ def prepare_data(data, robot):
     for i in split_strings: #projde všechny bloky
         splited_i = i.split(":")
         block = Block.objects.filter(name__contains=splited_i[0])[0]
-        code_array = splited_i[1].split(",")
+        code_array = splited_i[1].split("^")
         code_array.pop()
         j = 1
         code = block.code

@@ -27,7 +27,7 @@ function Libs(lib,all_block){
     var li = document.createElement('li')
     li.id = block.fields.name;
     li.addEventListener("click", function(){
-      create_element(li.id)
+      create_element(li.id,block.fields.alternative)
     });
     var span = document.createElement('span')
     span.classList.add("span-click")
@@ -55,7 +55,7 @@ function Carets(){
 
 //Vytvoří RUN tlačítko
 function Run_but(robots){
-    var Run_button = create_element("Run")
+    var Run_button = create_element("Run","Tlačitko pro spouštění programu")
     Run_button.children[0].children[0].style.visibility = "hidden"
     Run_button.style.top = "40%"
     Run_button.style.left = "15%"
@@ -114,7 +114,7 @@ function Run_send(){
         dta = dta.concat(elmnt.childNodes[0].nodeValue)
         dta = dta.concat("_")
         dta = dta.concat(elmnt.querySelectorAll("input")[0].value)
-        dta = dta.concat(",")
+        dta = dta.concat("^")
       });
       dta = dta.concat(";")
     });

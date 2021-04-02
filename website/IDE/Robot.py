@@ -2,6 +2,7 @@
 import unicodedata
 from naoqi import ALProxy
 import time
+import math
 
 
 """
