@@ -101,23 +101,9 @@ function Delete_box(){
 
 //Funkce na odesílání dat na server
 function Run_send(){
-  var dta = "";
   var Run_button = document.getElementById("Run")
   if (Run_button.parentElement.classList.contains("combine")){ //Pokud je Run_button s něčím spojený
-    var children = Array.prototype.slice.call(Run_button.parentElement.children)
-    children.shift();
-    children.forEach(element => { //Projdou se elementy
-      dta = dta.concat(element.id)
-      dta = dta.concat(":")
-      var childrenofelement = Array.prototype.slice.call(element.children[1].children)
-      childrenofelement.forEach(elmnt => {
-        dta = dta.concat(elmnt.childNodes[0].nodeValue)
-        dta = dta.concat("_")
-        dta = dta.concat(elmnt.querySelectorAll("input")[0].value)
-        dta = dta.concat("^")
-      });
-      dta = dta.concat(";")
-    });
+    dta = PrepareData()
     rbt = document.getElementById("Robot-select").value;
     document.getElementById("Runer").disabled = true;
     document.getElementById("Runer").firstChild.style.color = "gray";
@@ -148,4 +134,47 @@ function Stop(){
     success: function(response){
     }
   })
+}
+
+function Save(){
+  if (document.getElementById("Run").parentElement.classList.contains("combine")){
+    if (document.getElementById("SequenceName").value != ""){
+      dta = PrepareData()
+      $.ajax({ 
+        url: '',
+        type: 'post',
+        data: {
+          name : document.getElementById("SequenceName").value,
+          DTA : dta
+        },
+        success: function(response){
+          $('#SaveModal').modal('hide');
+        }
+      })
+    } else {
+      alert("Zadej jméno")
+    }
+  } else {
+    alert("Sekvence je prázdná")
+  }
+}
+
+function PrepareData(){
+  var dta = "";
+  var Run_button = document.getElementById("Run")
+  var children = Array.prototype.slice.call(Run_button.parentElement.children)
+  children.shift();
+  children.forEach(element => { //Projdou se elementy
+    dta = dta.concat(element.id)
+    dta = dta.concat(":")
+    var childrenofelement = Array.prototype.slice.call(element.children[1].children)
+    childrenofelement.forEach(elmnt => {
+      dta = dta.concat(elmnt.childNodes[0].nodeValue)
+      dta = dta.concat("_")
+      dta = dta.concat(elmnt.querySelectorAll("input")[0].value)
+      dta = dta.concat("^")
+    });
+    dta = dta.concat(";")
+  });
+  return dta
 }

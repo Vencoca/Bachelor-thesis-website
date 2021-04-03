@@ -31,6 +31,10 @@ def index(request):
         elif request.method == 'POST':
             if (request.POST.get('stop')):
                 R.stop = True
+            elif(request.POST.get('name')):
+                print(request.POST.get('name'))
+                code = save_data(request.POST.get('DTA'))
+                print(code)
             else:
                 data = request.POST.get('DTA')
                 rbt = request.POST.get('rbt')
@@ -59,6 +63,29 @@ def robot_init(data):
         ip = split_strings[0]
         port = split_strings[1]
         return ip,port,name
+
+def save_data(data):
+    split_strings = data.split(";")
+    split_strings.pop()
+    whole_code = ""
+    block_number = 0
+    for i in split_strings: #projde všechny bloky
+        splited_i = i.split(":")
+        block = Block.objects.filter(name__contains=splited_i[0])[0]
+        code_array = splited_i[1].split("^")
+        code_array.pop()
+        j = 1
+        code = block.code
+        for cd in code_array:
+            code = code.replace("$r" + str(j),cd.split("_")[1])
+            code = code.replace ("@r","robot")
+            j = j + 1
+        block_number += 1
+        if (block_number != 1) :
+            whole_code = whole_code + "\n"    
+        whole_code = whole_code + code 
+    return whole_code    
+
 
 
 def prepare_data(data, robot):
