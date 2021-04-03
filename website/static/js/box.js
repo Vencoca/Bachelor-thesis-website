@@ -11,6 +11,7 @@ function create_element(ID,alternative){
     //Div ve kterém jsou všechny posuvníky
     var spaceholder = document.createElement('div'); 
     spaceholder.classList.add("form-group");
+    spaceholder.classList.add("px-3");
     //Tlačítka na připojování
     var inpt = document.createElement('button');
     inpt.type = 'button';

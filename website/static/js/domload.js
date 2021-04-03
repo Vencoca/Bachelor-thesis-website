@@ -56,6 +56,7 @@ function Carets(){
 //Vytvoří RUN tlačítko
 function Run_but(robots){
     var Run_button = create_element("Run","Tlačitko pro spouštění programu")
+    Run_button.children[0].firstChild.nodeValue = "Spustit"
     Run_button.children[0].children[0].style.visibility = "hidden"
     Run_button.style.top = "40%"
     Run_button.style.left = "15%"
@@ -149,14 +150,20 @@ function Save(){
         },
         success: function(response){
           $('#SaveModal').modal('hide');
+          location.reload()
         }
       })
+      document.getElementById("SequenceName").value = ""
     } else {
       alert("Zadej jméno")
     }
   } else {
     alert("Sekvence je prázdná")
   }
+}
+
+function ClearBox(){
+  document.getElementById("SequenceName").value = ""
 }
 
 function PrepareData(){

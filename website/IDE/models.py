@@ -25,7 +25,7 @@ class Block(models.Model):
     alternative = models.CharField(max_length = 300,default='')
     lib = models.ForeignKey(Lib, on_delete=models.CASCADE,default='') #Odkaz ke které knihovně je přiřazen blok
     def __unicode__(self):
-        return u'%s' % self.name
+        return u'%s : %s' % (self.lib.name, self.name)
 
 class Slider(models.Model):
     name =  models.CharField(max_length = 50, default='') #Jméno posuvníku

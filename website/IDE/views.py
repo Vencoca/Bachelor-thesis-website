@@ -32,9 +32,9 @@ def index(request):
             if (request.POST.get('stop')):
                 R.stop = True
             elif(request.POST.get('name')):
-                print(request.POST.get('name'))
-                code = save_data(request.POST.get('DTA'))
-                print(code)
+                Code = save_data(request.POST.get('DTA'))
+                b = Block(name=request.POST.get('name'),code=Code,alternative="",lib=Lib.objects.get(name="Sekvence"))
+                b.save()
             else:
                 data = request.POST.get('DTA')
                 rbt = request.POST.get('rbt')
@@ -52,7 +52,6 @@ def index(request):
         'lib' : lib,
         'robots' : robots
     }
-    
     return render(request, "home.html", data)
 
 def robot_init(data):
